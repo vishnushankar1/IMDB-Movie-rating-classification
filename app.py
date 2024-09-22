@@ -10,7 +10,24 @@ word_index = imdb.get_word_index()
 reverse_word_index = {v: k for k, v in word_index.items()}
 
 # Load the model
-model = load_model('simple_rnn_imdb.h5')
+
+import streamlit as st
+import logging
+from keras.models import load_model
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
+
+# Load the model
+try:
+    model = load_model('simple_rnn_imdb.h5')
+    logging.info("Model loaded successfully.")
+except Exception as e:
+    logging.error("Error loading model: %s", e)
+    st.error("Failed to load the model. Please check the logs.")
+
+# Your app code follows here...
+
 
 # Helper Functions
 def decode_review(text):
